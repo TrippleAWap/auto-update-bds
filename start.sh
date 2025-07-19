@@ -10,7 +10,7 @@ wget -q -U "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:136.0) Gecko/20100101 F
 mkdir internal &> /dev/null
 
 # -u might update the server automatically i have no clue... we'll just delete it incase.
-rm internals/current/bedrock_server &> /dev/null
+rm internals/bedrock_server &> /dev/null
 unzip -u "versions/$version.zip" -d "internal"
 
 cd "internal"
