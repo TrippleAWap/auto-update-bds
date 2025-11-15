@@ -26,4 +26,4 @@ else
     echo "$latest_ver" > "$VERSION_FILE"
 fi
 
-chmod +x "$BEDROCK_BIN
+chmod +x "$BEDROCK_BIN"
