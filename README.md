@@ -1,22 +1,33 @@
 # Auto Update BDS
 
 ### Created to automatically update to the latest stable release of the **linux** bedrock_server
+___
 
+#### One Liner
 ```sh
-#!/bin/bash
+wget -O update_bds.sh https://raw.githubusercontent.com/TrippleAWap/auto-update-bds/refs/heads/root/start.sh && bash update_bds.sh
+```
 
-versionUrl=$(wget -q -O - "https://net-secondary.web.minecraft-services.net/api/v1.0/download/links" | grep -o 'https://www.minecraft.net/bedrockdedicatedserver/bin-linux/bedrock-server-[^"]*\.zip')
-version=$(echo "$versionUrl" | grep -oP 'bedrock-server-\K\d+\.\d+\.\d+\.\d+')
-echo "latest $version"
+#### Service File
+```service
+[Unit]
+Description=Bedrock Dedicated Server
+After=network.target
 
-mkdir versions &> /dev/null
-wget -q -U "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:136.0) Gecko/20100101 Firefox/136.0" $versionUrl -O "versions/$version.zip"
+[Service]
+Type=forking
+User=root
+WorkingDirectory=/root/bedrock_server/bds
 
-mkdir internal &> /dev/null
+ExecStartPre=/usr/bin/bash /root/bedrock_server/auto_update.sh
 
-# -u might update the server automatically i have no clue... we'll just delete it incase.
-rm internals/bedrock_server &> /dev/null
-unzip -u "versions/$version.zip" -d "internal"
+ExecStart=/usr/bin/screen -dmS bds -L -Logfile /var/log/bds.log /root/bedrock_server/bds/bedrock_server
 
-cd "internal"
-./bedrock_server```
+ExecStop=/usr/bin/screen -S bds -X quit
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
