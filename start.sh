@@ -1,6 +1,6 @@
 set -euo pipefail
 
-BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+BASE_DIR=$(pwd)
 VERSION_FILE="${BASE_DIR}/bds_version.txt"
 BEDROCK_BIN="${BASE_DIR}/bedrock_server"
 
