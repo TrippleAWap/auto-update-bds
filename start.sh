@@ -22,6 +22,7 @@ else
     echo "Updating to $latest_ver …"
     wget -qU "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:136.0) Gecko/20100101 Firefox/136.0" \
          "$url" -O "${BASE_DIR}/${latest_ver}.zip"
+    rm "${BEDROCK_BIN}"
     unzip -n "${BASE_DIR}/${latest_ver}.zip" -d "$BASE_DIR"
     echo "$latest_ver" > "$VERSION_FILE"
 fi
